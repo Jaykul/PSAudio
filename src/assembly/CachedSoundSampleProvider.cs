@@ -48,7 +48,7 @@ public class CachedSoundSampleProvider : ISampleProvider
         Array.Copy(AudioData, Position, buffer, offset, samplesToCopy);
 
         // # Auto-resetting position (if we return 0), then reset for the next use
-        Position = samplesToCopy == 0 ? 0 : Position + samplesToCopy;
+        Position = samplesToCopy < count ? 0 : Position + samplesToCopy;
         return (int)samplesToCopy;
     }
 

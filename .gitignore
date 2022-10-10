@@ -1,3 +1,5 @@
 [0-9]*/
 lib/
 audio/
+bin/
+obj/
