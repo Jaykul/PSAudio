@@ -6,7 +6,7 @@ function Start-Sound {
         [ValidateScript({ Test-Path $_ -PathType Leaf })]
         [string]$Path,
 
-        [Parameter(Mandatory, Position = 0 )]
+        [Parameter(Position = 0 )]
         [ArgumentCompleter({
             [OutputType([System.Management.Automation.CompletionResult])]
             param(
@@ -20,27 +20,28 @@ function Start-Sound {
                 [System.Management.Automation.CompletionResult]::new($file.BaseName)
             }
         })]
-        [string[]]$Name = (Split-Path $Path -Leaf)
+        [string[]]$Name = (Split-Path $Path -Leaf),
+
+        [switch]$NoCache
     )
     process {
-        if ($Path) {
-            if ($Name.Count -ne 1) {
-                throw "When you specify a Path to a sound file, you can only specify one Name"
-            }
-            $CachedAudio[$Name] = [CachedSound]::new($Path)
+        if ($Path -and $Name.Count -eq 1 -and -not $NoCache) {
+            $CachedAudio[$Name] = [PSAudio.CachedSoundSampleProvider]::new($Path)
         }
 
         foreach ($Sound in $Name) {
-            if (!$CachedAudio.ContainsKey($Sound)) {
-                $Path = Join-Path $AudioRoot "$Sound.*"
+            if (!$CachedAudio.ContainsKey($Sound) -and !$Path) {
+                $Path = Join-Path $AudioRoot "$Sound.*" | Convert-Path
                 if (Test-Path $Path) {
-                    $CachedAudio[$Sound] = [CachedSound]::new($Path)
+                    if (!$NoCache) {
+                        $CachedAudio[$Sound] = [PSAudio.CachedSoundSampleProvider]::new($Path)
+                    }
                 } else {
-                    throw "No sound with name '$Sound' found"
+                    throw "No sound '$Sound' found (looked in $Path)"
                 }
             }
 
-            $engine.PlaySound($CachedAudio[$Sound])
+            [PSAudio.AudioPlaybackEngine]::Instance.PlaySound($NoCache ? $Path : $CachedAudio[$Sound])
         }
     }
 }

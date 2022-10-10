@@ -34,11 +34,7 @@ Copyright = '(c) 2022 Joel Bennett. All rights reserved.'
 
 # Assemblies that must be loaded prior to importing this module
 RequiredAssemblies = @(
-    'lib\NAudio.Core.2.1.0\lib\netstandard2.0\NAudio.Core.dll'
-    'lib\NAudio.2.1.0\lib\net6.0\NAudio.dll'
-    'lib\NAudio.Wasapi.2.1.0\lib\netstandard2.0\NAudio.Wasapi.dll'
-    'lib\NAudio.Asio.2.1.0\lib\netstandard2.0\NAudio.Asio.dll'
-    'lib\NAudio.WinMM.2.1.0\lib\netstandard2.0\NAudio.WinMM.dll'
+    'lib\PSAudio.dll'
 )
 
 

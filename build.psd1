@@ -1,5 +1,5 @@
 @{
     SourcePaths = '.\src\NAudio.psd1'
-    CopyPaths = '..\lib', 'audio'
+    CopyPaths = '..\audio'
     OutputDirectory = '..'
 }
