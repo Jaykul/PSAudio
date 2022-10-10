@@ -36,8 +36,8 @@ public class AudioPlaybackEngine : IDisposable {
         this.AddMixerInput(new SelfDisposingAudioFileReader(fileName));
     }
 
-    public void PlaySound(ISampleProvider sound) {
-        this.AddMixerInput(sound);
+    public void PlaySound(CachedSound sound) {
+        this.AddMixerInput(new CachedSoundSampleProvider(sound));
     }
 
     public void AddMixerInput(ISampleProvider provider) {

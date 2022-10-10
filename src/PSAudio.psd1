@@ -30,7 +30,7 @@ CompanyName = 'Huddled Masses'
 Copyright = '(c) 2022 Joel Bennett. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'A module that can play audio asynchronously in PowerShell'
 
 # Assemblies that must be loaded prior to importing this module
 RequiredAssemblies = @(

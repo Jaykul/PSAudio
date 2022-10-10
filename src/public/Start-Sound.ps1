@@ -26,7 +26,7 @@ function Start-Sound {
     )
     process {
         if ($Path -and $Name.Count -eq 1 -and -not $NoCache) {
-            $CachedAudio[$Name] = [PSAudio.CachedSoundSampleProvider]::new($Path)
+            $CachedAudio[$Name] = [PSAudio.CachedSound]::new((Convert-Path $Path))
         }
 
         foreach ($Sound in $Name) {
@@ -34,7 +34,7 @@ function Start-Sound {
                 $Path = Join-Path $AudioRoot "$Sound.*" | Convert-Path
                 if (Test-Path $Path) {
                     if (!$NoCache) {
-                        $CachedAudio[$Sound] = [PSAudio.CachedSoundSampleProvider]::new($Path)
+                        $CachedAudio[$Sound] = [PSAudio.CachedSound]::new($Path)
                     }
                 } else {
                     throw "No sound '$Sound' found (looked in $Path)"
